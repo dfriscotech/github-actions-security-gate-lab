@@ -1,0 +1,32 @@
+name: Terraform Security Gate
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+# This lab does not require credentials or permission to write to the repo.
+permissions:
+  contents: read
+
+jobs:
+  checkov-terraform:
+    name: Checkov Terraform Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Configure Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Install Checkov
+        run: python -m pip install checkov
+
+      - name: Scan Terraform for unrestricted SSH
+        run: checkov -d terraform --framework terraform --check CKV_AWS_24

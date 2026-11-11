@@ -1,0 +1,12 @@
+# Terraform local state / downloaded provider binaries (should not be needed)
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+*.tfvars
+*.tfvars.json
+# Local editor / Python files
+.venv/
+__pycache__/
+.DS_Store
